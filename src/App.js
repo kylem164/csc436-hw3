@@ -1,10 +1,16 @@
-import CreatePost from "./CreateTodo";
+import React, {useState} from 'react'
+import CreateTodo from "./CreateTodo";
 import Todo from "./Todo";
 import UserBar from "./UserBar";
 import TodoList from "./TodoList"
 
+
 export default function App() {
-  const todos = [
+
+  const [user , setUser] = useState('')
+
+
+  const initialTodos = [
     {
       title: "Clean room",
       description: "vacuum, dust",
@@ -28,11 +34,14 @@ export default function App() {
       dateCompleted: "09-27-2021"
     }
   ]
+
+  const [ todos, setTodos ] = useState(initialTodos)
+
   return(
     <div>
-        <UserBar/>
+        <UserBar user={user} setUser={setUser}/>
         <br/><hr/>
-        <CreatePost/>
+        {user && <CreateTodo todos={todos} setTodos={setTodos} />}
         <br/><hr/>
         <p>TODO LIST:</p>
         <TodoList todos={todos}/>
