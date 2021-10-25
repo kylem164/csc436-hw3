@@ -16,10 +16,21 @@ function userReducer (state, action) {
           const newTodo = { 
               title: action.title,
               description: action.description,
-              dateCreated: action.dateCreated,
-              isComplete: action.isComplete
+              isComplete: false,
+              completedOn: undefined
             }
             return [ newTodo, ...state ]
+        case "TOGGLE":
+            return state.map((p, i) => {
+                if(i === action.postId) {
+                    p.isComplete = action.isComplete;
+                    p.completedOn = Date.now();
+                    console.log(p)
+                }
+                return p;
+            })
+        case "DELETE":
+            return state.filter((p,i) => i !== action.todoID)
         default:
            return state;
     }

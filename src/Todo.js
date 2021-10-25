@@ -1,16 +1,20 @@
-import React from 'react'
-export default function Todo ({ title, description, dateCreated, complete, dateCompleted }) {
+import React, {useContext} from 'react'
+
+import { ThemeContext, StateContext } from './Contexts'
+
+
+export default function Todo ({ title, description, isComplete, completedOn, todoID }) {
+    const {dispatch} = useContext(StateContext)
     const style = {
         fontSize: 11
     }
     return (
         <div>
             <b>{title}</b> - <i>{description}</i>
-            <input type="checkbox" checked={complete} />
+            <input type="checkbox" onClick={e => {dispatch({type: 'TOGGLE', isComplete:!isComplete, todoID: todoID})}} />
             <br/>
-            <text style={style}> dateCreated: {dateCreated} </text>
-            :
-            <text style ={style}> dateCompleted: {dateCompleted} </text>
+            <button onClick={(e) => {dispatch({type: 'DELETE', todoID: todoID})}}>Delete Todo</button>
+          {isComplete && <><br/><i>Completed on: {new Date(completedOn).toLocaleDateString('en-us')}</i><br/></>}
             <br/>
             <br/>
         </div>  

@@ -1,18 +1,19 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import { StateContext } from './Contexts'
 
-export default function CreatePost ({dispatch}) {
+export default function CreatePost () {
 
     const [ title, setTitle ] = useState('')
     const [ description, setDescription ] = useState('')
-    const dateCreated = Date(Date.now())
-    var isComplete = false
+    const {state, dispatch} = useContext(StateContext)
+    const {user} = state;
 
     function handleTitle (evt) { setTitle(evt.target.value) }
     function handleDescription (evt) { setDescription(evt.target.value) }
 
 
     return (
-    <form onSubmit={evt => {evt.preventDefault(); dispatch({type: "CREATE", title, description, dateCreated, isComplete});}}>
+    <form onSubmit={evt => {evt.preventDefault(); dispatch({type: "CREATE", title, description});}}>
         <label htmlFor="create-title">Title:</label>
         <input type="text" value={title} onChange={handleTitle} name="create-title" id="create-title" />
         <br/>
