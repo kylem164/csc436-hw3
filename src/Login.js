@@ -3,7 +3,7 @@ import { useContext } from 'react/cjs/react.development';
 import { StateContext } from './Contexts';
 
 
-export default function Login({dispatchUser}) {
+export default function Login() {
 
     const [username, setUsername] = useState('')
     const {dispatch} = useContext(StateContext)

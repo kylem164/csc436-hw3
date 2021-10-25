@@ -1,6 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import { ThemeContext, StateContext } from './Contexts';
 
-export default function Register({dispatchUser}) {
+
+export default function Register() {
+    const {state, dispatch} = useContext(StateContext)
+
 
     const [ formData, setFormData ] = useState({
         username: "",
@@ -9,7 +13,7 @@ export default function Register({dispatchUser}) {
     })
 
     return (
-    <form onSubmit={evt => {evt.preventDefault(); dispatchUser({type: "REGISTER", username: formData.username})}}> 
+    <form onSubmit={evt => {evt.preventDefault(); dispatch({type: "REGISTER", username: formData.username})}}> 
         <label htmlFor="register-username"> Username: </label>
             <input type="text" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} name="register-username" id="register-username" />
             <label htmlFor="register-password">Password:</label>
