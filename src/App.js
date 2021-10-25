@@ -1,14 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useReducer, useEffect} from 'react'
 import CreateTodo from "./CreateTodo";
-import Todo from "./Todo";
+import appReducer from './Reducers';
 import UserBar from "./UserBar";
 import TodoList from "./TodoList"
 
 
 export default function App() {
-
-  const [user , setUser] = useState('')
-
 
   const initialTodos = [
     {
@@ -35,13 +32,24 @@ export default function App() {
     }
   ]
 
-  const [ todos, setTodos ] = useState(initialTodos)
+
+  const [ state, dispatch ] = useReducer(appReducer, { user: '', todos: [] })
+  const {user, todos} = state
+
+  useEffect(() => {
+    if (user) {
+       document.title = `${user}’s Todo List` 
+     } else {
+       document.title = 'Todo List'
+   }
+  }, [user])
+
 
   return(
     <div>
-        <UserBar user={user} setUser={setUser}/>
+        <UserBar user={user} dispatchUser={dispatch}/>
         <br/><hr/>
-        {user && <CreateTodo todos={todos} setTodos={setTodos} />}
+        {user && <CreateTodo dispatch={dispatch} />}
         <br/><hr/>
         <p>TODO LIST:</p>
         <TodoList todos={todos}/>
