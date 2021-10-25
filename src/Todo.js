@@ -1,4 +1,5 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useR} from 'react'
+import { useResource } from 'react-request-hook'
 
 import { ThemeContext, StateContext } from './Contexts'
 
@@ -8,6 +9,7 @@ export default function Todo ({ title, description, isComplete, completedOn, tod
     const style = {
         fontSize: 11
     }
+
     return (
         <div>
             <b>{title}</b> - <i>{description}</i>

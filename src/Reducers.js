@@ -13,7 +13,8 @@ function userReducer (state, action) {
   function todoReducer (state, action) {
     switch (action.type) {
         case 'CREATE':
-          const newTodo = { 
+          const newTodo = {
+              id: action.id,
               title: action.title,
               description: action.description,
               isComplete: false,
@@ -31,6 +32,8 @@ function userReducer (state, action) {
             })
         case "DELETE":
             return state.filter((p,i) => i !== action.todoID)
+        case 'FETCH_TODOS':
+            return action.todos
         default:
            return state;
     }

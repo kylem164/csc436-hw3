@@ -15,13 +15,18 @@
       "author": "testuser",
       "complete": false,
       "completedOn": null
-    }
+    } 
   ],
   "users": [
     {
       "id": 1,
       "username": "testuser",
       "password": "badpassword"
+    },
+    {
+      "username": "kyle",
+      "password": "test",
+      "id": 2
     }
   ]
 }

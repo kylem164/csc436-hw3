@@ -3,6 +3,8 @@ import CreateTodo from "./CreateTodo";
 import appReducer from './Reducers';
 import UserBar from "./UserBar";
 import TodoList from "./TodoList"
+import { useResource } from 'react-request-hook';
+
 
 import { ThemeContext, StateContext } from './Contexts';
 
@@ -10,17 +12,23 @@ import { ThemeContext, StateContext } from './Contexts';
 
 export default function App() {
 
+  const [ todos, getTodos ] = useResource(() => ({
+    url: '/todos',
+    method: 'get'
+  }))
+
   const [ state, dispatch ] = useReducer(appReducer, { user: '', todos: [] })
-  const {user, todos} = state
+
+  useEffect(getTodos, [])
 
   useEffect(() => {
-    if (user) {
-       document.title = `${user}’s Todo List` 
-     } else {
-       document.title = 'Todo List'
-   }
-  }, [user])
+    if (todos && todos.data) {
+        dispatch({ type: 'FETCH_TODOS', todos: todos.data })
+    }
+}, [todos])
 
+
+const {user} = state;
 
   return(
     <div>
