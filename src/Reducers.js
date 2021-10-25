@@ -22,7 +22,7 @@ function userReducer (state, action) {
             return [ newTodo, ...state ]
         case "TOGGLE":
             return state.map((p, i) => {
-                if(i === action.postId) {
+                if(i === action.todoID) {
                     p.isComplete = action.isComplete;
                     p.completedOn = Date.now();
                     console.log(p)
