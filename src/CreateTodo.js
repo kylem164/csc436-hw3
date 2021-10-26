@@ -13,22 +13,25 @@ export default function CreatePost () {
 
 
 
-    const [todo , createTodo ] = useResource(({ title, description, author }) => ({
+    const [todo , createTodo ] = useResource(({ title, description, author, isCompleted, completedOn }) => ({
         url: '/todos',
         method: 'post',
-        data: { title, description, author }
+        data: { title, description, author, isCompleted, completedOn }
+        
     }))
 
     function handleTitle (evt) { setTitle(evt.target.value) }
     function handleDescription (evt) { setDescription(evt.target.value) }
      
     function handleCreate () {
-        createTodo({ title, description, author: user })
+        createTodo({ title, description, author: user, isCompleted: false, completedOn: undefined })
+        console.log("In handle Create")
     }
 
     useEffect(() => {
         if (todo && todo.data) {
             dispatch({ type: 'CREATE_POST', title: todo.data.title, description: todo.data.description , id: todo.data.id, author: user })
+            console.log("In useEffect")
         }
     }, [todo])
 
