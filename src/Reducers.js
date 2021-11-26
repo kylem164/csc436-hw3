@@ -22,16 +22,16 @@ function userReducer (state, action) {
             }
             return [ newTodo, ...state ]
         case "TOGGLE":
-            return state.map((p, i) => {
-                if(i === action.todoID) {
-                    p.isComplete = action.isComplete;
-                    p.completedOn = Date.now();
-                    console.log(p)
+            return state.map((t) => {
+                if(t.id === action.todoID) {
+                    t.isComplete = action.isComplete;
+                    t.completedOn = Date.now();
+                    console.log(t)
                 }
-                return p;
+                return t;
             })
         case "DELETE":
-            return state.filter((p,i) => i !== action.todoID)
+            return state.filter((t) => t.id !== action.todoID)
         case 'FETCH_TODOS':
             return action.todos
         default:

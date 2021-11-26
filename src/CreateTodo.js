@@ -14,7 +14,7 @@ export default function CreatePost () {
 
 
     const [todo , createTodo ] = useResource(({ title, description, author, isCompleted, completedOn }) => ({
-        url: '/todos',
+        url: `/todos`,
         method: 'post',
         data: { title, description, author, isCompleted, completedOn }
         

@@ -2,10 +2,20 @@ import React from 'react'
 import Todo from './Todo'
 import { StateContext } from './Contexts'
 import { useContext } from 'react/cjs/react.development'
-export default function PostList () {
+export default function TodoList () {
     const {state} = useContext(StateContext)
     const {todos} = state;
     return (
-    <div>
-       {todos.map((p, i) => <Todo {...p} title={p.title} description={p.description} key={'todo-' + i} todoID={i}/>)}
-    </div> )}
+      <div>
+      {todos.length > 0 && todos.map((t, i) => (
+        <Todo
+          {...t}
+          title={t.title}
+          description={t.description}
+          key={"todo-" + i}
+          todoID={t.id}
+        />
+      ))}
+    </div>
+  );
+}
