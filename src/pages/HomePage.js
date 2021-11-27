@@ -2,24 +2,25 @@ import React, { useEffect, useContext } from 'react'
 import { StateContext } from '../Contexts'
 import { useResource } from 'react-request-hook'
 import PostList from '../TodoList'
+import TodoList from '../TodoList'
 
 
 export default function HomePage () {
     const { state, dispatch } = useContext(StateContext)
-    const [ posts, getPosts ] = useResource(() => ({
-        url: '/posts',
+    const [ todos, getPosts ] = useResource(() => ({
+        url: '/todo',
         method: 'get'
     }))
     useEffect(getPosts, [])
     useEffect(() => {
-    if (posts && posts.data) {
-            dispatch({ type: 'FETCH_POSTS', posts: posts.data.reverse() })
+    if (todos && todos.data) {
+            dispatch({ type: 'FETCH_POSTS', todos: todos.data.reverse() })
         }
-    }, [posts])
-    const { data, isLoading } = posts;
+    }, [todos])
+    const { data, isLoading } = todos;
     return (
         <>
-          {isLoading && 'Posts loading...'} <PostList />
+          {isLoading && 'Todos loading...'} <TodoList/>
         </>
     )
 } 

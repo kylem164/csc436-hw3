@@ -5,18 +5,15 @@ import { useResource } from 'react-request-hook';
 import TodoPage from './pages/TodoPage';
 import HeaderBar from './pages/HeaderBar';
 import HomePage from './pages/HomePage';
+import UsersPage from './pages/UsersPage'
+import ProfilePage from './pages/ProfilePage'
 import { Container } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
 
 import { Router, View } from 'react-navi';
 import { mount, route } from 'navi';
 
-
 import { ThemeContext, StateContext } from './Contexts';
-
-
 
 export default function App() {
 
@@ -42,7 +39,10 @@ const routes = mount({
   '/todo/create':route({ view: <CreateTodo /> }),
   '/todo/:id': route(req => {
       return { view: <TodoPage id={req.params.id} /> }
-  }),//"/users": route({ view: <UsersPage /> }),
+  }),"/users": route({ view: <UsersPage /> }),
+  "/profile": route((req) => {
+    return { view: <ProfilePage /> };
+  }),
 });
 
 return (
@@ -51,7 +51,7 @@ return (
         <Router routes={routes}>
           <Container>
               <HeaderBar/>
-              <hr />
+              <hr/>
               <View />
           </Container>
           </Router>

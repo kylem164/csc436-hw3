@@ -11,9 +11,7 @@ export default function TodoPage ({ id }) {
         url: `/todo/${id}`,
         method: 'get'
     }))
-
     useEffect(getTodo, [id])
-
     return (
         <div>
             {(todo && todo.data)
