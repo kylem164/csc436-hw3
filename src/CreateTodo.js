@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react'
 import { StateContext } from './Contexts'
 import { useResource } from 'react-request-hook'
-
+import { useNavigation } from 'react-navi'
 
 
 export default function CreatePost () {
@@ -11,29 +11,36 @@ export default function CreatePost () {
     const {state, dispatch} = useContext(StateContext)
     const {user} = state;
 
+    const navigation = useNavigation(); 
 
-
-    const [todo , createTodo ] = useResource(({ title, description, author, isCompleted, completedOn }) => ({
-        url: `/todos`,
-        method: 'post',
-        data: { title, description, author, isCompleted, completedOn }
-        
-    }))
+    const [todo, createTodo] = useResource(({ title, description, author, isCompleted, completedOn }) => ({
+        url: "/todo",
+        method: "post",
+        headers: { Authorization: `${state.user.access_token}` },
+        data: { title, description, author, isCompleted, completedOn },
+      }));
 
     function handleTitle (evt) { setTitle(evt.target.value) }
     function handleDescription (evt) { setDescription(evt.target.value) }
      
     function handleCreate () {
-        createTodo({ title, description, author: user, isCompleted: false, completedOn: undefined })
-        console.log("In handle Create")
+        createTodo({ title, description, author: user.username, isCompleted: false, completedOn: undefined })
     }
 
     useEffect(() => {
         if (todo && todo.data) {
-            dispatch({ type: 'CREATE_POST', title: todo.data.title, description: todo.data.description , id: todo.data.id, author: user })
-            console.log("In useEffect")
+          dispatch({
+            type: "CREATE_TODO",
+            title: todo.data.title,
+            description: todo.data.description,
+            id: todo.data.id,
+            author: user.username,
+            isCompleted: false,
+            completedOn: undefined
+          });
+          navigation.navigate('/todo/${todo.data.id}');
         }
-    }, [todo])
+      }, [todo]);
 
     return (
     <form onSubmit={evt => {evt.preventDefault(); handleCreate();}}>

@@ -1,9 +1,17 @@
 import React, {useState, useReducer, useEffect} from 'react'
 import CreateTodo from "./CreateTodo";
 import appReducer from './Reducers';
-import UserBar from "./UserBar";
-import TodoList from "./TodoList"
 import { useResource } from 'react-request-hook';
+import TodoPage from './pages/TodoPage';
+import HeaderBar from './pages/HeaderBar';
+import HomePage from './pages/HomePage';
+import { Container } from 'react-bootstrap';
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
+
+import { Router, View } from 'react-navi';
+import { mount, route } from 'navi';
 
 
 import { ThemeContext, StateContext } from './Contexts';
@@ -13,11 +21,11 @@ import { ThemeContext, StateContext } from './Contexts';
 export default function App() {
 
   const [ todos, getTodos ] = useResource(() => ({
-    url: '/todos',
+    url: '/todo',
     method: 'get'
   }))
 
-  const [ state, dispatch ] = useReducer(appReducer, { user: '', todos: [] })
+  const [ state, dispatch ] = useReducer(appReducer, { user: {}, todos: [] })
 
   useEffect(getTodos, [])
 
@@ -27,17 +35,27 @@ export default function App() {
     }
 }, [todos])
 
-
 const {user} = state;
 
-  return(
-    <div>
-        <StateContext.Provider value={{state: state, dispatch: dispatch}}>
-          <UserBar />
-          <br/><br/><hr/><br/> 
-          {user && <CreateTodo /> }
-          <TodoList />
-        </StateContext.Provider>
-    </div>
-  );
+const routes = mount({
+  '/': route({ view: <HomePage /> }),
+  '/todo/create':route({ view: <CreateTodo /> }),
+  '/todo/:id': route(req => {
+      return { view: <TodoPage id={req.params.id} /> }
+  }),//"/users": route({ view: <UsersPage /> }),
+});
+
+return (
+  <div>
+      <StateContext.Provider value={{state: state, dispatch: dispatch}}>
+        <Router routes={routes}>
+          <Container>
+              <HeaderBar/>
+              <hr />
+              <View />
+          </Container>
+          </Router>
+      </StateContext.Provider>
+  </div>
+)
 }
