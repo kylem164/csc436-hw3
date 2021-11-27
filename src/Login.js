@@ -1,5 +1,4 @@
-import React, {useImperativeHandle, useState} from 'react'
-import { useContext } from 'react/cjs/react.development';
+import React, {useImperativeHandle, useState, useContext} from 'react'
 import { StateContext } from './Contexts';
 import { useResource } from 'react-request-hook';
 import { useEffect } from 'react';

@@ -1,4 +1,3 @@
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 function userReducer (state, action) {
     switch (action.type) {

@@ -1,6 +1,5 @@
 import React, {useState, useContext} from 'react'
 import Login from './Login'
-import Logout from './Logout'
 import Register from './Register'
 import {Button} from 'react-bootstrap'
 
